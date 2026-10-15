@@ -1,0 +1,4 @@
+{"policy_id":"production-fix","version":1,
+ "required":["repository_change","ci","deployment","production_health"],
+ "max_evidence_age_seconds":3600,
+ "prohibited_paths":[".github/workflows/*","secrets/*"]}

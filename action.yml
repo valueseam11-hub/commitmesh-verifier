@@ -1,0 +1,30 @@
+name: CommitMesh verify
+description: Verify an AI agent's claimed outcome against evidence and sign a record. Blocks the job unless the outcome is verified.
+inputs:
+  manifest: { description: Path to agent manifest JSON, required: true }
+  claim: { description: Path to claim JSON, required: true }
+  policy: { description: Path to policy JSON, required: true }
+  evidence: { description: Path to evidence JSON, required: true }
+  signing-key: { description: PEM Ed25519 private key (pass from a secret), required: true }
+  out: { description: Where to write the signed record, required: false, default: commitmesh-record.json }
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      # Inputs go through env vars, never interpolated into the script body (prevents workflow injection).
+      env:
+        V_MANIFEST: ${{ inputs.manifest }}
+        V_CLAIM: ${{ inputs.claim }}
+        V_POLICY: ${{ inputs.policy }}
+        V_EVIDENCE: ${{ inputs.evidence }}
+        V_KEY: ${{ inputs.signing-key }}
+        V_OUT: ${{ inputs.out }}
+        V_SRC: ${{ github.action_path }}
+      run: |
+        set -euo pipefail
+        python -m pip install --quiet "$V_SRC"
+        umask 077
+        keyfile="$(mktemp)"; trap 'rm -f "$keyfile"' EXIT
+        printf '%s\n' "$V_KEY" > "$keyfile"
+        commitmesh verify --manifest "$V_MANIFEST" --claim "$V_CLAIM" --policy "$V_POLICY" \
+          --evidence "$V_EVIDENCE" --key "$keyfile" --out "$V_OUT"

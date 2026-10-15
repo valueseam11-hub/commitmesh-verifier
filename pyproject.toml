@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "commitmesh"
+version = "0.1.0"
+description = "Evidence-bound verification of AI agent outcomes, with signed, offline-verifiable records."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+dependencies = ["cryptography>=43.0"]
+
+[project.scripts]
+commitmesh = "commitmesh.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

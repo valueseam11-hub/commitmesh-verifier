@@ -1,0 +1,4 @@
+{"agent_id":"fixer-1","version":"1.0.0","components":{
+ "prompt":{"status":"known_and_hashed","digest":"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+ "tools":{"status":"known_and_hashed","digest":"sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"},
+ "model":{"status":"unknown","ref":"closed provider model; no weight hash exposed"}}}
